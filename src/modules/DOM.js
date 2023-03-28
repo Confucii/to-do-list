@@ -37,7 +37,21 @@ export function renderMainContent(project, index) {
   mainContent.appendChild(todos);
 }
 
-function renderProjectForm() {
+function renderOverlay() {
+  const bodySelector = document.querySelector("body");
+
+  const overlayDiv = document.createElement("div");
+  overlayDiv.classList.add("overlay");
+
+  bodySelector.appendChild(overlayDiv);
+}
+
+function deleteOverlay() {
+  const overlayDiv = document.querySelector(".overlay");
+  overlayDiv.remove();
+}
+
+function renderProjectModal(formName, form) {
   const bodySelector = document.querySelector("body");
 
   const modalDiv = document.createElement("div");
@@ -47,7 +61,7 @@ function renderProjectForm() {
   modalHeader.classList.add("project-modal-header");
 
   const modalTitle = document.createElement("h2");
-  modalTitle.textContent = "Add project";
+  modalTitle.textContent = formName;
 
   modalHeader.appendChild(modalTitle);
 
@@ -58,6 +72,7 @@ function renderProjectForm() {
   modalClose.appendChild(modalCloseImg);
 
   modalClose.addEventListener("click", () => {
+    deleteOverlay();
     modalDiv.remove();
   });
 
@@ -65,8 +80,7 @@ function renderProjectForm() {
 
   modalDiv.appendChild(modalHeader);
 
-  const projectForm = document.createElement("form");
-  modalDiv.appendChild(projectForm);
+  modalDiv.appendChild(form);
 
   bodySelector.appendChild(modalDiv);
 }
@@ -113,7 +127,8 @@ export function renderProjects(projects) {
   addButtonImage.setAttribute("src", plusSVG);
   addProject.appendChild(addButtonImage);
   addProject.addEventListener("click", () => {
-    renderProjectForm();
+    renderOverlay();
+    renderProjectModal("Add project", document.createElement("form"));
   });
 
   projectHolder.appendChild(addProject);

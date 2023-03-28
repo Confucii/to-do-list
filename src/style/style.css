@@ -91,10 +91,20 @@ body {
   text-align: center;
 }
 
-.project-modal {
+.overlay {
   position: fixed;
-  width: 40%;
-  height: 40%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.project-modal {
+  background-color: white;
+  position: fixed;
+  width: 50%;
+  height: 50%;
   border: 1px solid black;
   top: 50%;
   left: 50%;
@@ -104,10 +114,12 @@ body {
 
 .project-modal-header {
   display: flex;
+  align-items: center;
   padding: 5px;
 }
 
 .project-modal-header h2 {
+  font-size: 2rem;
   flex: 1;
   text-align: center;
 }
@@ -117,4 +129,9 @@ body {
   background-color: white;
   width: 30px;
   height: 30px;
+}
+
+.project-modal-header button:hover img {
+  filter: invert(13%) sepia(100%) saturate(7485%) hue-rotate(2deg)
+    brightness(107%) contrast(111%);
 }
