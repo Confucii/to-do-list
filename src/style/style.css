@@ -43,16 +43,20 @@ body {
 }
 
 .project {
-  text-decoration: none;
-  border: none;
-  font: inherit;
   background-color: white;
-  padding: 10px;
+  padding: 0px 10px;
   font-size: 2rem;
   height: 50px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.project p {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  text-align: start;
+  flex: 1;
 }
 
 .project img {
@@ -61,7 +65,7 @@ body {
 }
 
 .project:hover {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 12px;
 }
 
 .project:hover img {
