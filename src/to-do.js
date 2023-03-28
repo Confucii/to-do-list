@@ -1,4 +1,4 @@
-const toDo = function toDoFactory(
+const ToDo = function ToDoFactory(
   initTitle,
   initDescription,
   initDueDate,
@@ -20,18 +20,23 @@ const toDo = function toDoFactory(
   function setTitle(newTitle) {
     title = newTitle;
   }
+
   function setDescription(newDescription) {
     description = newDescription;
   }
+
   function setDueDate(newDueDate) {
     dueDate = newDueDate;
   }
+
   function setPriority(newPriority) {
     priority = newPriority;
   }
+
   function setStatus(newStatus) {
     status = newStatus;
   }
+
   return {
     getTitle,
     getDescription,
@@ -46,4 +51,4 @@ const toDo = function toDoFactory(
   };
 };
 
-export default toDo;
+export default ToDo;
