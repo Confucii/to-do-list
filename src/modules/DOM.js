@@ -1,6 +1,7 @@
 import deleteImgSVG from "../images/delete-forever.svg";
 import plusSVG from "../images/plus.svg";
 import closeSVG from "../images/close.svg";
+import Project from "./project";
 
 function cleaner(elem) {
   while (elem.firstChild) {
@@ -51,6 +52,45 @@ function deleteOverlay() {
   overlayDiv.remove();
 }
 
+function addProjectForm(projects) {
+  const projectForm = document.createElement("form");
+  projectForm.classList.add("project-add-form");
+
+  const projectNameLabel = document.createElement("label");
+  projectNameLabel.textContent = "Name";
+  projectNameLabel.setAttribute("for", "project-name");
+
+  projectForm.appendChild(projectNameLabel);
+
+  const projectName = document.createElement("input");
+  projectName.setAttribute("type", "text");
+  projectName.setAttribute("id", "project-name");
+  projectName.setAttribute("name", "project-name");
+  projectName.setAttribute("minlength", "5");
+  projectName.setAttribute("maxlength", "15");
+  projectName.required = true;
+
+  projectForm.appendChild(projectName);
+
+  const submitBtn = document.createElement("input");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.setAttribute("value", "Add");
+
+  projectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    projects.push(Project(projectName.value));
+    deleteOverlay();
+    const modalDiv = document.querySelector(".project-modal");
+    modalDiv.remove();
+    console.log(projects);
+    renderProjects(projects); // eslint-disable-line no-use-before-define
+  });
+
+  projectForm.appendChild(submitBtn);
+
+  return projectForm;
+}
+
 function renderProjectModal(formName, form) {
   const bodySelector = document.querySelector("body");
 
@@ -67,6 +107,7 @@ function renderProjectModal(formName, form) {
 
   const modalClose = document.createElement("button");
   modalClose.classList.add("project-modal-close");
+
   const modalCloseImg = document.createElement("img");
   modalCloseImg.setAttribute("src", closeSVG);
   modalClose.appendChild(modalCloseImg);
@@ -123,12 +164,14 @@ export function renderProjects(projects) {
 
   const addProject = document.createElement("button");
   addProject.classList.add("add-project-btn");
+
   const addButtonImage = document.createElement("img");
   addButtonImage.setAttribute("src", plusSVG);
   addProject.appendChild(addButtonImage);
+
   addProject.addEventListener("click", () => {
     renderOverlay();
-    renderProjectModal("Add project", document.createElement("form"));
+    renderProjectModal("Add project", addProjectForm(projects));
   });
 
   projectHolder.appendChild(addProject);

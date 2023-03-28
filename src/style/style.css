@@ -103,6 +103,8 @@ body {
 .project-modal {
   background-color: white;
   position: fixed;
+  display: flex;
+  flex-direction: column;
   width: 50%;
   height: 50%;
   border: 1px solid black;
@@ -134,4 +136,8 @@ body {
 .project-modal-header button:hover img {
   filter: invert(13%) sepia(100%) saturate(7485%) hue-rotate(2deg)
     brightness(107%) contrast(111%);
+}
+
+.project-add-form {
+  flex: 1;
 }

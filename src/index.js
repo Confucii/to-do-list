@@ -3,8 +3,12 @@ import ToDo from "./modules/to-do";
 import renderPage, { renderProjects, renderMainContent } from "./modules/DOM";
 import "./style/style.css";
 
-const projects = [Project("General"), Project("Aba"), Project("Bobaas")];
+function init() {
+  const projects = [Project("General")];
 
-renderPage();
-renderProjects(projects);
-renderMainContent(projects[0], 0);
+  renderPage();
+  renderProjects(projects);
+  renderMainContent(projects[0], 0);
+}
+
+init();
