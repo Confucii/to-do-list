@@ -1,4 +1,6 @@
 import deleteImgSVG from "../images/delete-forever.svg";
+import plusSVG from "../images/plus.svg";
+import closeSVG from "../images/close.svg";
 
 function cleaner(elem) {
   while (elem.firstChild) {
@@ -33,6 +35,40 @@ export function renderMainContent(project, index) {
 
   mainContent.appendChild(contentName);
   mainContent.appendChild(todos);
+}
+
+function renderProjectForm() {
+  const bodySelector = document.querySelector("body");
+
+  const modalDiv = document.createElement("div");
+  modalDiv.classList.add("project-modal");
+
+  const modalHeader = document.createElement("div");
+  modalHeader.classList.add("project-modal-header");
+
+  const modalTitle = document.createElement("h2");
+  modalTitle.textContent = "Add project";
+
+  modalHeader.appendChild(modalTitle);
+
+  const modalClose = document.createElement("button");
+  modalClose.classList.add("project-modal-close");
+  const modalCloseImg = document.createElement("img");
+  modalCloseImg.setAttribute("src", closeSVG);
+  modalClose.appendChild(modalCloseImg);
+
+  modalClose.addEventListener("click", () => {
+    modalDiv.remove();
+  });
+
+  modalHeader.appendChild(modalClose);
+
+  modalDiv.appendChild(modalHeader);
+
+  const projectForm = document.createElement("form");
+  modalDiv.appendChild(projectForm);
+
+  bodySelector.appendChild(modalDiv);
 }
 
 export function renderProjects(projects) {
@@ -70,6 +106,17 @@ export function renderProjects(projects) {
     }
     projectHolder.appendChild(newProject);
   });
+
+  const addProject = document.createElement("button");
+  addProject.classList.add("add-project-btn");
+  const addButtonImage = document.createElement("img");
+  addButtonImage.setAttribute("src", plusSVG);
+  addProject.appendChild(addButtonImage);
+  addProject.addEventListener("click", () => {
+    renderProjectForm();
+  });
+
+  projectHolder.appendChild(addProject);
 }
 
 export default function renderPage() {

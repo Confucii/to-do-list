@@ -17,7 +17,7 @@ body {
   display: grid;
   height: 100%;
   grid-template-rows: 1fr 9fr;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 300px 1fr;
 }
 
 .header,
@@ -75,4 +75,46 @@ body {
 .project img:hover {
   filter: invert(13%) sepia(100%) saturate(7485%) hue-rotate(2deg)
     brightness(107%) contrast(111%);
+}
+
+.add-project-btn {
+  width: 95%;
+  align-self: center;
+}
+
+.add-project-btn img {
+  height: 35px;
+}
+
+.main h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.project-modal {
+  position: fixed;
+  width: 40%;
+  height: 40%;
+  border: 1px solid black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.project-modal-header {
+  display: flex;
+  padding: 5px;
+}
+
+.project-modal-header h2 {
+  flex: 1;
+  text-align: center;
+}
+
+.project-modal-header button {
+  border: none;
+  background-color: white;
+  width: 30px;
+  height: 30px;
 }
