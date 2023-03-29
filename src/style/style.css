@@ -184,6 +184,11 @@ body {
   border-radius: 10px;
 }
 
+.todo-date {
+  margin-left: auto;
+  font-size: 1.5rem;
+}
+
 .todo-div[data-status="true"] p {
   text-decoration: line-through;
 }
@@ -228,10 +233,6 @@ body {
 .todo-div[data-danger="4"] .todo-danger {
   filter: invert(16%) sepia(96%) saturate(6905%) hue-rotate(360deg)
     brightness(90%) contrast(126%);
-}
-
-.todo-expand {
-  margin-left: auto;
 }
 
 .todo-expand:hover {

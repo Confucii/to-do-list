@@ -1,3 +1,4 @@
+import format from "date-fns/format"; // eslint-disable-line import/no-extraneous-dependencies
 import cleaner from "./cleaner";
 import deleteImgSVG from "../images/delete-forever.svg";
 import plusSVG from "../images/plus.svg";
@@ -6,7 +7,9 @@ import dangerSVG from "../images/skull.svg";
 import editSVG from "../images/pencil.svg";
 import doneSVG from "../images/check.svg";
 import expandSVG from "../images/chevron-down.svg";
-import { renderModal } from "./modals";
+import ToDo from "./to-do";
+
+import { closeModal, renderModal } from "./modals";
 
 function renderToDos(project) {
   const todos = document.querySelector(".todos");
@@ -50,6 +53,11 @@ function renderToDos(project) {
     toDoName.textContent = todo.getTitle();
     newToDo.appendChild(toDoName);
 
+    const toDoDate = document.createElement("p");
+    toDoDate.classList.add("todo-date");
+    toDoDate.textContent = format(new Date(todo.getDueDate()), "dd/MM/yy");
+    newToDo.appendChild(toDoDate);
+
     const expandImg = document.createElement("img");
     expandImg.setAttribute("src", expandSVG);
     expandImg.classList.add("todo-expand");
@@ -78,7 +86,86 @@ function renderToDos(project) {
   });
 }
 
-function renderAddToDoBtn() {
+function createOption(value, text, selected = false) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.text = text;
+  if (selected) option.selected = true;
+  return option;
+}
+
+function addToDoForm(project) {
+  const toDoForm = document.createElement("form");
+  toDoForm.classList.add("todo-modal-form");
+
+  const toDoNameLabel = document.createElement("label");
+  toDoNameLabel.textContent = "Target name";
+  toDoNameLabel.setAttribute("for", "todo-name");
+
+  toDoForm.appendChild(toDoNameLabel);
+
+  const toDoName = document.createElement("input");
+  toDoName.setAttribute("type", "text");
+  toDoName.setAttribute("id", "todo-name");
+  toDoName.setAttribute("name", "todo-name");
+  toDoName.setAttribute("minlength", "2");
+  toDoName.setAttribute("maxlength", "20");
+  toDoName.required = true;
+
+  toDoForm.appendChild(toDoName);
+
+  const toDoDateLabel = document.createElement("label");
+  toDoDateLabel.textContent = "Deadline";
+  toDoDateLabel.setAttribute("for", "todo-date");
+
+  toDoForm.appendChild(toDoDateLabel);
+
+  const toDoDate = document.createElement("input");
+  toDoDate.setAttribute("type", "date");
+  toDoDate.setAttribute("id", "todo-date");
+  toDoDate.setAttribute("name", "todo-date");
+  toDoDate.setAttribute("min", new Date().toJSON().slice(0, 10));
+  toDoDate.setAttribute("value", new Date().toJSON().slice(0, 10));
+
+  toDoForm.appendChild(toDoDate);
+
+  const toDoPriorityLabel = document.createElement("label");
+  toDoPriorityLabel.textContent = "Danger level";
+  toDoPriorityLabel.setAttribute("for", "todo-priority");
+
+  toDoForm.appendChild(toDoPriorityLabel);
+
+  const toDoPriority = document.createElement("select");
+  toDoPriority.setAttribute("id", "todo-priority");
+  toDoPriority.setAttribute("name", "todo-priority");
+
+  toDoPriority.appendChild(createOption("1", "Green Toad"));
+  toDoPriority.appendChild(createOption("2", "Yellow Cat"));
+  toDoPriority.appendChild(createOption("3", "Orange Tiger", true));
+  toDoPriority.appendChild(createOption("4", "Red Dragon"));
+  toDoPriority.appendChild(createOption("5", "Dark Nightmare"));
+
+  toDoForm.appendChild(toDoPriority);
+
+  const submitBtn = document.createElement("input");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.setAttribute("value", "Add");
+
+  toDoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    project.addToDo(
+      ToDo(toDoName.value, "a", toDoDate.value, toDoPriority.value)
+    );
+    renderToDos(project);
+    closeModal();
+  });
+
+  toDoForm.appendChild(submitBtn);
+
+  return toDoForm;
+}
+
+function renderAddToDoBtn(project) {
   const todos = document.querySelector(".todos");
 
   const addToDoBtn = document.createElement("button");
@@ -89,7 +176,7 @@ function renderAddToDoBtn() {
   addToDoBtn.appendChild(addButtonImage);
 
   addToDoBtn.addEventListener("click", () => {
-    renderModal("Add target", document.createElement("form"));
+    renderModal("Add target", addToDoForm(project));
   });
 
   todos.appendChild(addToDoBtn);
@@ -108,6 +195,6 @@ export default function renderMainContent(project, index) {
   todos.classList.add("todos");
   todos.setAttribute("data-project", index);
   mainContent.appendChild(todos);
-  renderAddToDoBtn();
+  renderAddToDoBtn(project);
   renderToDos(project);
 }
