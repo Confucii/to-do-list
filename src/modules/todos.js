@@ -103,7 +103,9 @@ function renderToDos(project) {
     editImg.setAttribute("src", editSVG);
     editImg.classList.add("todo-edit");
 
-    editImg.addEventListener("click", () => {});
+    editImg.addEventListener("click", () => {
+      renderModal("Add target", addToDoForm(project, todo)); // eslint-disable-line no-use-before-define
+    });
     newToDo.appendChild(editImg);
 
     const deleteImg = document.createElement("img");
@@ -128,7 +130,7 @@ function createOption(value, text, selected = false) {
   return option;
 }
 
-function addToDoForm(project) {
+function addToDoForm(project, todo = false) {
   const toDoForm = document.createElement("form");
   toDoForm.classList.add("todo-modal-form");
 
@@ -181,18 +183,53 @@ function addToDoForm(project) {
 
   toDoForm.appendChild(toDoPriority);
 
+  const toDoDescriptionLabel = document.createElement("label");
+  toDoDescriptionLabel.textContent = "Description";
+  toDoDescriptionLabel.setAttribute("for", "todo-description");
+
+  toDoForm.appendChild(toDoDescriptionLabel);
+
+  const toDoDescription = document.createElement("textarea");
+  toDoDescription.setAttribute("id", "todo-description");
+  toDoDescription.setAttribute("name", "todo-description");
+  toDoDescription.setAttribute("rows", "4");
+
+  toDoForm.appendChild(toDoDescription);
+
   const submitBtn = document.createElement("input");
   submitBtn.setAttribute("type", "submit");
   submitBtn.setAttribute("value", "Add");
 
-  toDoForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    project.addToDo(
-      ToDo(toDoName.value, "a", toDoDate.value, toDoPriority.value)
-    );
-    renderToDos(project);
-    closeModal();
-  });
+  if (todo) {
+    toDoName.value = todo.getTitle();
+    toDoDescription.value = todo.getDescription();
+    toDoDate.value = todo.getDueDate();
+    toDoPriority.value = todo.getPriority();
+
+    toDoForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      todo.setTitle(toDoName.value);
+      todo.setDescription(toDoDescription.value);
+      todo.setDueDate(toDoDate.value);
+      todo.setPriority(toDoPriority.value);
+      renderToDos(project);
+      closeModal();
+    });
+  } else {
+    toDoForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      project.addToDo(
+        ToDo(
+          toDoName.value,
+          toDoDescription.value,
+          toDoDate.value,
+          toDoPriority.value
+        )
+      );
+      renderToDos(project);
+      closeModal();
+    });
+  }
 
   toDoForm.appendChild(submitBtn);
 
