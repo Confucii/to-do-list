@@ -4,12 +4,62 @@ import closeSVG from "../images/close.svg";
 import dangerSVG from "../images/skull.svg";
 import editSVG from "../images/pencil.svg";
 import doneSVG from "../images/check.svg";
+import expandSVG from "../images/chevron-down.svg";
 import Project from "./project";
 
 function cleaner(elem) {
   while (elem.firstChild) {
     elem.removeChild(elem.firstChild);
   }
+}
+
+function renderOverlay() {
+  const bodySelector = document.querySelector("body");
+
+  const overlayDiv = document.createElement("div");
+  overlayDiv.classList.add("overlay");
+
+  bodySelector.appendChild(overlayDiv);
+}
+
+function deleteOverlay() {
+  const overlayDiv = document.querySelector(".overlay");
+  overlayDiv.remove();
+}
+
+function renderProjectModal(modalClass, formName, form) {
+  const bodySelector = document.querySelector("body");
+
+  const modalDiv = document.createElement("div");
+  modalDiv.classList.add(`${modalClass}`);
+
+  const modalHeader = document.createElement("div");
+  modalHeader.classList.add(`${modalClass}-header`);
+
+  const modalTitle = document.createElement("h2");
+  modalTitle.textContent = formName;
+
+  modalHeader.appendChild(modalTitle);
+
+  const modalClose = document.createElement("button");
+  modalClose.classList.add(`${modalClass}-close`);
+
+  const modalCloseImg = document.createElement("img");
+  modalCloseImg.setAttribute("src", closeSVG);
+  modalClose.appendChild(modalCloseImg);
+
+  modalClose.addEventListener("click", () => {
+    deleteOverlay();
+    modalDiv.remove();
+  });
+
+  modalHeader.appendChild(modalClose);
+
+  modalDiv.appendChild(modalHeader);
+
+  modalDiv.appendChild(form);
+
+  bodySelector.appendChild(modalDiv);
 }
 
 function renderToDos(project) {
@@ -48,6 +98,13 @@ function renderToDos(project) {
     toDoName.textContent = todo.getTitle();
     newToDo.appendChild(toDoName);
 
+    const expandImg = document.createElement("img");
+    expandImg.setAttribute("src", expandSVG);
+    expandImg.classList.add("todo-expand");
+
+    expandImg.addEventListener("click", () => {});
+    newToDo.appendChild(expandImg);
+
     const editImg = document.createElement("img");
     editImg.setAttribute("src", editSVG);
     editImg.classList.add("todo-edit");
@@ -83,20 +140,6 @@ function renderMainContent(project, index) {
   todos.setAttribute("data-project", index);
   mainContent.appendChild(todos);
   renderToDos(project);
-}
-
-function renderOverlay() {
-  const bodySelector = document.querySelector("body");
-
-  const overlayDiv = document.createElement("div");
-  overlayDiv.classList.add("overlay");
-
-  bodySelector.appendChild(overlayDiv);
-}
-
-function deleteOverlay() {
-  const overlayDiv = document.querySelector(".overlay");
-  overlayDiv.remove();
 }
 
 function renderProjects(projects) {
@@ -172,41 +215,6 @@ function addProjectForm(projects) {
   projectForm.appendChild(submitBtn);
 
   return projectForm;
-}
-
-function renderProjectModal(modalClass, formName, form) {
-  const bodySelector = document.querySelector("body");
-
-  const modalDiv = document.createElement("div");
-  modalDiv.classList.add(`${modalClass}`);
-
-  const modalHeader = document.createElement("div");
-  modalHeader.classList.add(`${modalClass}-header`);
-
-  const modalTitle = document.createElement("h2");
-  modalTitle.textContent = formName;
-
-  modalHeader.appendChild(modalTitle);
-
-  const modalClose = document.createElement("button");
-  modalClose.classList.add(`${modalClass}-close`);
-
-  const modalCloseImg = document.createElement("img");
-  modalCloseImg.setAttribute("src", closeSVG);
-  modalClose.appendChild(modalCloseImg);
-
-  modalClose.addEventListener("click", () => {
-    deleteOverlay();
-    modalDiv.remove();
-  });
-
-  modalHeader.appendChild(modalClose);
-
-  modalDiv.appendChild(modalHeader);
-
-  modalDiv.appendChild(form);
-
-  bodySelector.appendChild(modalDiv);
 }
 
 function renderAddProjectBtn(projects) {

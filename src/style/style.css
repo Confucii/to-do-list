@@ -230,8 +230,13 @@ body {
     brightness(90%) contrast(126%);
 }
 
-.todo-edit {
+.todo-expand {
   margin-left: auto;
+}
+
+.todo-expand:hover {
+  filter: invert(99%) sepia(3%) saturate(202%) hue-rotate(218deg)
+    brightness(119%) contrast(100%);
 }
 
 .todo-edit:hover {
