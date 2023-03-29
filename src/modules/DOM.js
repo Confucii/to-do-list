@@ -2,6 +2,8 @@ import deleteImgSVG from "../images/delete-forever.svg";
 import plusSVG from "../images/plus.svg";
 import closeSVG from "../images/close.svg";
 import dangerSVG from "../images/skull.svg";
+import editSVG from "../images/pencil.svg";
+import doneSVG from "../images/check.svg";
 import Project from "./project";
 
 function cleaner(elem) {
@@ -20,9 +22,24 @@ function renderToDos(project) {
     newToDo.classList.add("todo-div");
     newToDo.setAttribute("data-index", index);
     newToDo.setAttribute("data-danger", todo.getPriority());
+    newToDo.setAttribute("data-status", todo.getStatus());
+
+    const checkImage = document.createElement("img");
+    checkImage.classList.add("todo-check");
+    if (newToDo.dataset.status === "false") {
+      checkImage.setAttribute("src", doneSVG);
+    } else {
+      checkImage.setAttribute("src", closeSVG);
+    }
+
+    checkImage.addEventListener("click", () => {
+      todo.toggleStatus();
+      renderToDos(project);
+    });
+    newToDo.appendChild(checkImage);
 
     const dangerImage = document.createElement("img");
-    dangerImage.classList.add("danger");
+    dangerImage.classList.add("todo-danger");
     dangerImage.setAttribute("src", dangerSVG);
     newToDo.appendChild(dangerImage);
 
@@ -31,14 +48,21 @@ function renderToDos(project) {
     toDoName.textContent = todo.getTitle();
     newToDo.appendChild(toDoName);
 
+    const editImg = document.createElement("img");
+    editImg.setAttribute("src", editSVG);
+    editImg.classList.add("todo-edit");
+
+    editImg.addEventListener("click", () => {});
+    newToDo.appendChild(editImg);
+
     const deleteImg = document.createElement("img");
-    deleteImg.setAttribute("src", closeSVG);
+    deleteImg.setAttribute("src", deleteImgSVG);
+    deleteImg.classList.add("todo-delete");
 
     deleteImg.addEventListener("click", () => {
       project.removeToDo(index);
       renderToDos(project);
     });
-
     newToDo.appendChild(deleteImg);
 
     todos.appendChild(newToDo);

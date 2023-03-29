@@ -184,34 +184,62 @@ body {
   border-radius: 10px;
 }
 
+.todo-div[data-status="true"] p {
+  text-decoration: line-through;
+}
+
 .todo-div img {
   height: 60%;
 }
 
-.todo-div img:last-child {
-  margin-left: auto;
-}
-.todo-div img:last-child:hover {
-  filter: invert(16%) sepia(96%) saturate(6905%) hue-rotate(360deg)
-    brightness(90%) contrast(126%);
+.todo-check {
+  display: none;
 }
 
-.todo-div[data-danger="1"] .danger {
+.todo-div:hover .todo-check {
+  display: block;
+}
+
+.todo-check:hover {
   filter: invert(57%) sepia(37%) saturate(5700%) hue-rotate(86deg)
     brightness(124%) contrast(117%);
 }
 
-.todo-div[data-danger="2"] .danger {
+.todo-div[data-status="true"] .todo-check:hover {
+  filter: invert(16%) sepia(96%) saturate(6905%) hue-rotate(360deg)
+    brightness(90%) contrast(126%);
+}
+
+.todo-div[data-danger="1"] .todo-danger {
+  filter: invert(57%) sepia(37%) saturate(5700%) hue-rotate(86deg)
+    brightness(124%) contrast(117%);
+}
+
+.todo-div[data-danger="2"] .todo-danger {
   filter: invert(94%) sepia(74%) saturate(7499%) hue-rotate(358deg)
     brightness(108%) contrast(102%);
 }
 
-.todo-div[data-danger="3"] .danger {
+.todo-div[data-danger="3"] .todo-danger {
   filter: invert(73%) sepia(86%) saturate(3641%) hue-rotate(0deg)
     brightness(103%) contrast(103%);
 }
 
-.todo-div[data-danger="4"] .danger {
+.todo-div[data-danger="4"] .todo-danger {
+  filter: invert(16%) sepia(96%) saturate(6905%) hue-rotate(360deg)
+    brightness(90%) contrast(126%);
+}
+
+.todo-edit {
+  margin-left: auto;
+}
+
+.todo-edit:hover {
+  filter: invert(8%) sepia(100%) saturate(7483%) hue-rotate(247deg)
+    brightness(92%) contrast(144%);
+}
+
+.todo-delete:hover {
   filter: invert(16%) sepia(96%) saturate(6905%) hue-rotate(360deg)
     brightness(90%) contrast(126%);
 }
