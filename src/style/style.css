@@ -116,6 +116,7 @@ body {
   position: fixed;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
   width: 50%;
   height: 50%;
   border: 1px solid black;
@@ -238,6 +239,11 @@ body {
 .todo-expand:hover {
   filter: invert(99%) sepia(3%) saturate(202%) hue-rotate(218deg)
     brightness(119%) contrast(100%);
+}
+
+.todo-info {
+  font-size: 1.3rem;
+  padding: 20px;
 }
 
 .todo-edit:hover {

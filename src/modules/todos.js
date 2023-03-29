@@ -11,6 +11,38 @@ import ToDo from "./To-do";
 
 import { closeModal, renderModal } from "./modals";
 
+function toDoInfo(todo) {
+  const toDoInfoDiv = document.createElement("div");
+  toDoInfoDiv.classList.add("todo-info");
+
+  const toDoTitle = document.createElement("p");
+  toDoTitle.textContent = `Name: ${todo.getTitle()}`;
+
+  const toDoDescription = document.createElement("p");
+  toDoDescription.textContent = `Description: ${todo.getDescription()}`;
+
+  const toDoDate = document.createElement("p");
+  toDoDate.textContent = `Deadline: ${format(
+    new Date(todo.getDueDate()),
+    "dd/MM/yy"
+  )}`;
+
+  const toDoDanger = document.createElement("p");
+  toDoDanger.textContent = `Danger level: ${todo.getPriority()}/5`;
+
+  const toDoStatus = document.createElement("p");
+  const currentStatus = !todo.getStatus() ? "Hunt Ongoing" : "Terminated";
+  toDoStatus.textContent = `Status: ${currentStatus}`;
+
+  toDoInfoDiv.appendChild(toDoTitle);
+  toDoInfoDiv.appendChild(toDoDescription);
+  toDoInfoDiv.appendChild(toDoDate);
+  toDoInfoDiv.appendChild(toDoDanger);
+  toDoInfoDiv.appendChild(toDoStatus);
+
+  renderModal(`${todo.getTitle()} info`, toDoInfoDiv);
+}
+
 function renderToDos(project) {
   const todos = document.querySelector(".todos");
 
@@ -62,7 +94,9 @@ function renderToDos(project) {
     expandImg.setAttribute("src", expandSVG);
     expandImg.classList.add("todo-expand");
 
-    expandImg.addEventListener("click", () => {});
+    expandImg.addEventListener("click", () => {
+      toDoInfo(todo);
+    });
     newToDo.appendChild(expandImg);
 
     const editImg = document.createElement("img");
