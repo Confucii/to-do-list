@@ -104,7 +104,7 @@ function renderToDos(project) {
     editImg.classList.add("todo-edit");
 
     editImg.addEventListener("click", () => {
-      renderModal("Add target", addToDoForm(project, todo)); // eslint-disable-line no-use-before-define
+      renderModal("Edit target", addToDoForm(project, todo)); // eslint-disable-line no-use-before-define
     });
     newToDo.appendChild(editImg);
 
@@ -198,9 +198,10 @@ function addToDoForm(project, todo = false) {
 
   const submitBtn = document.createElement("input");
   submitBtn.setAttribute("type", "submit");
-  submitBtn.setAttribute("value", "Add");
 
   if (todo) {
+    submitBtn.setAttribute("value", "Edit");
+
     toDoName.value = todo.getTitle();
     toDoDescription.value = todo.getDescription();
     toDoDate.value = todo.getDueDate();
@@ -216,6 +217,8 @@ function addToDoForm(project, todo = false) {
       closeModal();
     });
   } else {
+    submitBtn.setAttribute("value", "Add");
+
     toDoForm.addEventListener("submit", (e) => {
       e.preventDefault();
       project.addToDo(
