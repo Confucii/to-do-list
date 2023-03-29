@@ -62,6 +62,7 @@ body {
   height: 100%;
   text-align: start;
   flex: 1;
+  overflow: hidden;
 }
 
 .project img {
