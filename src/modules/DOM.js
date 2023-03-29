@@ -1,6 +1,7 @@
 import deleteImgSVG from "../images/delete-forever.svg";
 import plusSVG from "../images/plus.svg";
 import closeSVG from "../images/close.svg";
+import dangerSVG from "../images/skull.svg";
 import Project from "./project";
 
 function cleaner(elem) {
@@ -11,17 +12,35 @@ function cleaner(elem) {
 
 function renderToDos(project) {
   const todos = document.querySelector(".todos");
-  console.log(todos);
-  project.getToDos().forEach((todo, index) => {
+  cleaner(todos);
+
+  const todosArr = project.getToDos();
+  todosArr.forEach((todo, index) => {
     const newToDo = document.createElement("div");
     newToDo.classList.add("todo-div");
     newToDo.setAttribute("data-index", index);
+    newToDo.setAttribute("data-danger", todo.getPriority());
+
+    const dangerImage = document.createElement("img");
+    dangerImage.classList.add("danger");
+    dangerImage.setAttribute("src", dangerSVG);
+    newToDo.appendChild(dangerImage);
 
     const toDoName = document.createElement("p");
     toDoName.classList.add("todo-name");
     toDoName.textContent = todo.getTitle();
-
     newToDo.appendChild(toDoName);
+
+    const deleteImg = document.createElement("img");
+    deleteImg.setAttribute("src", closeSVG);
+
+    deleteImg.addEventListener("click", () => {
+      project.removeToDo(index);
+      renderToDos(project);
+    });
+
+    newToDo.appendChild(deleteImg);
+
     todos.appendChild(newToDo);
   });
 }
@@ -107,7 +126,7 @@ function addProjectForm(projects) {
   projectName.setAttribute("type", "text");
   projectName.setAttribute("id", "project-name");
   projectName.setAttribute("name", "project-name");
-  projectName.setAttribute("minlength", "5");
+  projectName.setAttribute("minlength", "3");
   projectName.setAttribute("maxlength", "15");
   projectName.required = true;
 
@@ -211,6 +230,11 @@ export default function renderPage(projects) {
 
   const header = document.createElement("div");
   header.classList.add("header");
+
+  const heroTitle = document.createElement("h1");
+  heroTitle.textContent = "MetaHunt";
+  header.appendChild(heroTitle);
+
   content.appendChild(header);
 
   const sidebar = document.createElement("div");

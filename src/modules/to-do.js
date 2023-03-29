@@ -33,8 +33,8 @@ const ToDo = function ToDoFactory(
     priority = newPriority;
   }
 
-  function setStatus(newStatus) {
-    status = newStatus;
+  function toggleStatus() {
+    status = !status;
   }
 
   return {
@@ -47,7 +47,7 @@ const ToDo = function ToDoFactory(
     setDescription,
     setDueDate,
     setPriority,
-    setStatus,
+    toggleStatus,
   };
 };
 
