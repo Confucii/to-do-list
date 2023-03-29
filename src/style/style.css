@@ -92,11 +92,6 @@ body {
   height: 35px;
 }
 
-.main h1 {
-  font-size: 3rem;
-  text-align: center;
-}
-
 .overlay {
   position: fixed;
   top: 0;
@@ -146,4 +141,33 @@ body {
 
 .project-modal-form {
   flex: 1;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.main h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.todos {
+  padding: 0px 10px;
+  height: 100%;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+}
+
+.todo-div {
+  display: flex;
+  padding: 0px 10px;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+  font-size: 2rem;
 }

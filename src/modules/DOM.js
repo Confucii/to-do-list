@@ -9,20 +9,37 @@ function cleaner(elem) {
   }
 }
 
-export function renderMainContent(project, index) {
+function renderToDos(project) {
+  const todos = document.querySelector(".todos");
+  console.log(todos);
+  project.getToDos().forEach((todo, index) => {
+    const newToDo = document.createElement("div");
+    newToDo.classList.add("todo-div");
+    newToDo.setAttribute("data-index", index);
+
+    const toDoName = document.createElement("p");
+    toDoName.classList.add("todo-name");
+    toDoName.textContent = todo.getTitle();
+
+    newToDo.appendChild(toDoName);
+    todos.appendChild(newToDo);
+  });
+}
+
+function renderMainContent(project, index) {
   const mainContent = document.querySelector(".main");
 
   cleaner(mainContent);
 
   const contentName = document.createElement("h1");
   contentName.textContent = project.getName();
+  mainContent.appendChild(contentName);
 
   const todos = document.createElement("div");
   todos.classList.add("todos");
   todos.setAttribute("data-project", index);
-
-  mainContent.appendChild(contentName);
   mainContent.appendChild(todos);
+  renderToDos(project);
 }
 
 function renderOverlay() {
@@ -39,7 +56,7 @@ function deleteOverlay() {
   overlayDiv.remove();
 }
 
-export function renderProjects(projects) {
+function renderProjects(projects) {
   const projectsRef = projects;
   const projectHolder = document.querySelector(".projects");
 
@@ -149,7 +166,7 @@ function renderProjectModal(modalClass, formName, form) {
   bodySelector.appendChild(modalDiv);
 }
 
-export function renderAddProjectBtn(projects) {
+function renderAddProjectBtn(projects) {
   const sidebar = document.querySelector(".sidebar");
   const addProject = document.createElement("button");
   addProject.classList.add("add-project-btn");
