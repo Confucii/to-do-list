@@ -1,6 +1,7 @@
 import cleaner from "./cleaner";
 import renderMainContent from "./todos";
 import deleteImgSVG from "../images/delete-forever.svg";
+import editSVG from "../images/pencil.svg";
 import Project from "./Project";
 import plusSVG from "../images/plus.svg";
 import { closeModal, renderModal } from "./modals";
@@ -25,6 +26,15 @@ function renderProjects(projects) {
 
     newProject.appendChild(projectName);
     if (index > 0) {
+      const editImg = document.createElement("img");
+      editImg.setAttribute("src", editSVG);
+
+      editImg.addEventListener("click", () => {
+        renderModal("Edit category", addProjectForm(projects, element)); // eslint-disable-line no-use-before-define
+      });
+
+      newProject.append(editImg);
+
       const deleteImg = document.createElement("img");
       deleteImg.setAttribute("src", deleteImgSVG);
 
@@ -42,7 +52,7 @@ function renderProjects(projects) {
   });
 }
 
-function addProjectForm(projects) {
+function addProjectForm(projects, project = false) {
   const projectForm = document.createElement("form");
   projectForm.classList.add("project-modal-form");
 
@@ -64,15 +74,28 @@ function addProjectForm(projects) {
 
   const submitBtn = document.createElement("input");
   submitBtn.setAttribute("type", "submit");
-  submitBtn.setAttribute("value", "Add");
 
-  projectForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    projects.push(Project(projectName.value));
-    closeModal();
-    renderProjects(projects);
-  });
+  if (project) {
+    projectName.value = project.getName();
 
+    submitBtn.setAttribute("value", "Edit");
+
+    projectForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      project.setName(projectName.value);
+      closeModal();
+      renderProjects(projects);
+    });
+  } else {
+    submitBtn.setAttribute("value", "Add");
+
+    projectForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      projects.push(Project(projectName.value));
+      closeModal();
+      renderProjects(projects);
+    });
+  }
   projectForm.appendChild(submitBtn);
 
   return projectForm;
