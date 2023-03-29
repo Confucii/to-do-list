@@ -9,19 +9,6 @@ function cleaner(elem) {
   }
 }
 
-function renderSidebar() {
-  const sidebar = document.querySelector(".sidebar");
-
-  const sideTitle = document.createElement("h2");
-  sideTitle.textContent = "Targets";
-
-  const projectHolder = document.createElement("div");
-  projectHolder.classList.add("projects");
-
-  sidebar.appendChild(sideTitle);
-  sidebar.appendChild(projectHolder);
-}
-
 export function renderMainContent(project, index) {
   const mainContent = document.querySelector(".main");
 
@@ -50,80 +37,6 @@ function renderOverlay() {
 function deleteOverlay() {
   const overlayDiv = document.querySelector(".overlay");
   overlayDiv.remove();
-}
-
-function addProjectForm(projects) {
-  const projectForm = document.createElement("form");
-  projectForm.classList.add("project-add-form");
-
-  const projectNameLabel = document.createElement("label");
-  projectNameLabel.textContent = "Name";
-  projectNameLabel.setAttribute("for", "project-name");
-
-  projectForm.appendChild(projectNameLabel);
-
-  const projectName = document.createElement("input");
-  projectName.setAttribute("type", "text");
-  projectName.setAttribute("id", "project-name");
-  projectName.setAttribute("name", "project-name");
-  projectName.setAttribute("minlength", "5");
-  projectName.setAttribute("maxlength", "15");
-  projectName.required = true;
-
-  projectForm.appendChild(projectName);
-
-  const submitBtn = document.createElement("input");
-  submitBtn.setAttribute("type", "submit");
-  submitBtn.setAttribute("value", "Add");
-
-  projectForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    projects.push(Project(projectName.value));
-    deleteOverlay();
-    const modalDiv = document.querySelector(".project-modal");
-    modalDiv.remove();
-    console.log(projects);
-    renderProjects(projects); // eslint-disable-line no-use-before-define
-  });
-
-  projectForm.appendChild(submitBtn);
-
-  return projectForm;
-}
-
-function renderProjectModal(formName, form) {
-  const bodySelector = document.querySelector("body");
-
-  const modalDiv = document.createElement("div");
-  modalDiv.classList.add("project-modal");
-
-  const modalHeader = document.createElement("div");
-  modalHeader.classList.add("project-modal-header");
-
-  const modalTitle = document.createElement("h2");
-  modalTitle.textContent = formName;
-
-  modalHeader.appendChild(modalTitle);
-
-  const modalClose = document.createElement("button");
-  modalClose.classList.add("project-modal-close");
-
-  const modalCloseImg = document.createElement("img");
-  modalCloseImg.setAttribute("src", closeSVG);
-  modalClose.appendChild(modalCloseImg);
-
-  modalClose.addEventListener("click", () => {
-    deleteOverlay();
-    modalDiv.remove();
-  });
-
-  modalHeader.appendChild(modalClose);
-
-  modalDiv.appendChild(modalHeader);
-
-  modalDiv.appendChild(form);
-
-  bodySelector.appendChild(modalDiv);
 }
 
 export function renderProjects(projects) {
@@ -161,7 +74,83 @@ export function renderProjects(projects) {
     }
     projectHolder.appendChild(newProject);
   });
+}
 
+function addProjectForm(projects) {
+  const projectForm = document.createElement("form");
+  projectForm.classList.add("project-modal-form");
+
+  const projectNameLabel = document.createElement("label");
+  projectNameLabel.textContent = "Name";
+  projectNameLabel.setAttribute("for", "project-name");
+
+  projectForm.appendChild(projectNameLabel);
+
+  const projectName = document.createElement("input");
+  projectName.setAttribute("type", "text");
+  projectName.setAttribute("id", "project-name");
+  projectName.setAttribute("name", "project-name");
+  projectName.setAttribute("minlength", "5");
+  projectName.setAttribute("maxlength", "15");
+  projectName.required = true;
+
+  projectForm.appendChild(projectName);
+
+  const submitBtn = document.createElement("input");
+  submitBtn.setAttribute("type", "submit");
+  submitBtn.setAttribute("value", "Add");
+
+  projectForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    projects.push(Project(projectName.value));
+    deleteOverlay();
+    const modalDiv = document.querySelector(".project-modal");
+    modalDiv.remove();
+    renderProjects(projects);
+  });
+
+  projectForm.appendChild(submitBtn);
+
+  return projectForm;
+}
+
+function renderProjectModal(modalClass, formName, form) {
+  const bodySelector = document.querySelector("body");
+
+  const modalDiv = document.createElement("div");
+  modalDiv.classList.add(`${modalClass}`);
+
+  const modalHeader = document.createElement("div");
+  modalHeader.classList.add(`${modalClass}-header`);
+
+  const modalTitle = document.createElement("h2");
+  modalTitle.textContent = formName;
+
+  modalHeader.appendChild(modalTitle);
+
+  const modalClose = document.createElement("button");
+  modalClose.classList.add(`${modalClass}-close`);
+
+  const modalCloseImg = document.createElement("img");
+  modalCloseImg.setAttribute("src", closeSVG);
+  modalClose.appendChild(modalCloseImg);
+
+  modalClose.addEventListener("click", () => {
+    deleteOverlay();
+    modalDiv.remove();
+  });
+
+  modalHeader.appendChild(modalClose);
+
+  modalDiv.appendChild(modalHeader);
+
+  modalDiv.appendChild(form);
+
+  bodySelector.appendChild(modalDiv);
+}
+
+export function renderAddProjectBtn(projects) {
+  const sidebar = document.querySelector(".sidebar");
   const addProject = document.createElement("button");
   addProject.classList.add("add-project-btn");
 
@@ -171,13 +160,32 @@ export function renderProjects(projects) {
 
   addProject.addEventListener("click", () => {
     renderOverlay();
-    renderProjectModal("Add project", addProjectForm(projects));
+    renderProjectModal(
+      "project-modal",
+      "Add project",
+      addProjectForm(projects)
+    );
   });
 
-  projectHolder.appendChild(addProject);
+  sidebar.appendChild(addProject);
 }
 
-export default function renderPage() {
+function renderSidebar(projects) {
+  const sidebar = document.querySelector(".sidebar");
+
+  const sideTitle = document.createElement("h2");
+  sideTitle.textContent = "Targets";
+  sidebar.appendChild(sideTitle);
+
+  const projectHolder = document.createElement("div");
+  projectHolder.classList.add("projects");
+  sidebar.appendChild(projectHolder);
+  renderProjects(projects);
+
+  renderAddProjectBtn(projects);
+}
+
+export default function renderPage(projects) {
   const bodySelector = document.querySelector("body");
 
   const content = document.createElement("div");
@@ -191,10 +199,10 @@ export default function renderPage() {
   const sidebar = document.createElement("div");
   sidebar.classList.add("sidebar");
   content.appendChild(sidebar);
+  renderSidebar(projects);
 
   const main = document.createElement("div");
   main.classList.add("main");
   content.appendChild(main);
-
-  renderSidebar();
+  renderMainContent(projects[0], 0);
 }
