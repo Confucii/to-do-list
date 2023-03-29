@@ -7,7 +7,7 @@ import dangerSVG from "../images/skull.svg";
 import editSVG from "../images/pencil.svg";
 import doneSVG from "../images/check.svg";
 import expandSVG from "../images/chevron-down.svg";
-import ToDo from "./to-do";
+import ToDo from "./To-do";
 
 import { closeModal, renderModal } from "./modals";
 

@@ -1,7 +1,7 @@
 import cleaner from "./cleaner";
 import renderMainContent from "./todos";
 import deleteImgSVG from "../images/delete-forever.svg";
-import Project from "./project";
+import Project from "./Project";
 import plusSVG from "../images/plus.svg";
 import { closeModal, renderModal } from "./modals";
 

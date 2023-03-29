@@ -1,5 +1,5 @@
-import Project from "./modules/project";
-import ToDo from "./modules/to-do";
+import Project from "./modules/Project";
+import ToDo from "./modules/To-do";
 import renderPage from "./modules/DOM";
 import "./style/style.css";
 
