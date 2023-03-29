@@ -122,8 +122,9 @@ body {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  width: 50%;
-  height: 50%;
+  width: 40%;
+  height: fit-content;
+  padding-bottom: 10px;
   border: 1px solid black;
   top: 50%;
   left: 50%;
@@ -157,6 +158,18 @@ body {
 
 .project-modal-form {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-modal-form :is(label, input) {
+  font-size: 1.5rem;
+}
+
+.project-modal-form input[type="submit"] {
+  margin-top: 15px;
+  width: 20%;
 }
 
 .todo-modal-form {
