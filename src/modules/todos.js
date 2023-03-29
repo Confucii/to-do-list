@@ -130,6 +130,16 @@ function createOption(value, text, selected = false) {
   return option;
 }
 
+function createDiv(label, input) {
+  const formInputDiv = document.createElement("div");
+  formInputDiv.classList.add("form-input");
+
+  formInputDiv.appendChild(label);
+  formInputDiv.appendChild(input);
+
+  return formInputDiv;
+}
+
 function addToDoForm(project, todo = false) {
   const toDoForm = document.createElement("form");
   toDoForm.classList.add("todo-modal-form");
@@ -137,8 +147,6 @@ function addToDoForm(project, todo = false) {
   const toDoNameLabel = document.createElement("label");
   toDoNameLabel.textContent = "Target name";
   toDoNameLabel.setAttribute("for", "todo-name");
-
-  toDoForm.appendChild(toDoNameLabel);
 
   const toDoName = document.createElement("input");
   toDoName.setAttribute("type", "text");
@@ -148,13 +156,11 @@ function addToDoForm(project, todo = false) {
   toDoName.setAttribute("maxlength", "20");
   toDoName.required = true;
 
-  toDoForm.appendChild(toDoName);
+  toDoForm.appendChild(createDiv(toDoNameLabel, toDoName));
 
   const toDoDateLabel = document.createElement("label");
   toDoDateLabel.textContent = "Deadline";
   toDoDateLabel.setAttribute("for", "todo-date");
-
-  toDoForm.appendChild(toDoDateLabel);
 
   const toDoDate = document.createElement("input");
   toDoDate.setAttribute("type", "date");
@@ -163,13 +169,11 @@ function addToDoForm(project, todo = false) {
   toDoDate.setAttribute("min", new Date().toJSON().slice(0, 10));
   toDoDate.setAttribute("value", new Date().toJSON().slice(0, 10));
 
-  toDoForm.appendChild(toDoDate);
+  toDoForm.appendChild(createDiv(toDoDateLabel, toDoDate));
 
   const toDoPriorityLabel = document.createElement("label");
   toDoPriorityLabel.textContent = "Danger level";
   toDoPriorityLabel.setAttribute("for", "todo-priority");
-
-  toDoForm.appendChild(toDoPriorityLabel);
 
   const toDoPriority = document.createElement("select");
   toDoPriority.setAttribute("id", "todo-priority");
@@ -181,20 +185,18 @@ function addToDoForm(project, todo = false) {
   toDoPriority.appendChild(createOption("4", "Red Dragon"));
   toDoPriority.appendChild(createOption("5", "Dark Nightmare"));
 
-  toDoForm.appendChild(toDoPriority);
+  toDoForm.appendChild(createDiv(toDoPriorityLabel, toDoPriority));
 
   const toDoDescriptionLabel = document.createElement("label");
   toDoDescriptionLabel.textContent = "Description";
   toDoDescriptionLabel.setAttribute("for", "todo-description");
-
-  toDoForm.appendChild(toDoDescriptionLabel);
 
   const toDoDescription = document.createElement("textarea");
   toDoDescription.setAttribute("id", "todo-description");
   toDoDescription.setAttribute("name", "todo-description");
   toDoDescription.setAttribute("rows", "4");
 
-  toDoForm.appendChild(toDoDescription);
+  toDoForm.appendChild(createDiv(toDoDescriptionLabel, toDoDescription));
 
   const submitBtn = document.createElement("input");
   submitBtn.setAttribute("type", "submit");
