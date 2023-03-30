@@ -179,8 +179,8 @@ function addToDoForm(project, todo = false) {
   toDoPriority.setAttribute("id", "todo-priority");
   toDoPriority.setAttribute("name", "todo-priority");
 
-  toDoPriority.appendChild(createOption("1", "Green Toad"));
-  toDoPriority.appendChild(createOption("2", "Yellow Cat"));
+  toDoPriority.appendChild(createOption("1", "Cyan Bird"));
+  toDoPriority.appendChild(createOption("2", "Green Toad"));
   toDoPriority.appendChild(createOption("3", "Orange Tiger", true));
   toDoPriority.appendChild(createOption("4", "Red Dragon"));
   toDoPriority.appendChild(createOption("5", "Dark Nightmare"));
