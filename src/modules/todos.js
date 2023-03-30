@@ -10,6 +10,7 @@ import expandSVG from "../images/chevron-down.svg";
 import ToDo from "./To-do";
 
 import { closeModal, renderModal } from "./modals";
+import { SaveData } from "./storage";
 
 function toDoInfo(todo) {
   const toDoInfoDiv = document.createElement("div");
@@ -115,6 +116,7 @@ function renderToDos(project) {
     deleteImg.addEventListener("click", () => {
       project.removeToDo(index);
       renderToDos(project);
+      SaveData(project);
     });
     newToDo.appendChild(deleteImg);
 
@@ -217,6 +219,7 @@ function addToDoForm(project, todo = false) {
       todo.setPriority(toDoPriority.value);
       renderToDos(project);
       closeModal();
+      SaveData(project);
     });
   } else {
     submitBtn.setAttribute("value", "Add");
@@ -233,6 +236,7 @@ function addToDoForm(project, todo = false) {
       );
       renderToDos(project);
       closeModal();
+      SaveData(project);
     });
   }
 

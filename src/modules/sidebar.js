@@ -5,6 +5,7 @@ import editSVG from "../images/pencil.svg";
 import Project from "./Project";
 import plusSVG from "../images/plus.svg";
 import { closeModal, renderModal } from "./modals";
+import { SaveData } from "./storage";
 
 function renderProjects(projects) {
   const projectsRef = projects;
@@ -44,6 +45,7 @@ function renderProjects(projects) {
           renderMainContent(projectsRef[0], 0);
         projectsRef.splice(index, 1);
         renderProjects(projectsRef);
+        SaveData(projectsRef);
       });
 
       newProject.appendChild(deleteImg);
@@ -85,6 +87,7 @@ function addProjectForm(projects, project = false) {
       project.setName(projectName.value);
       closeModal();
       renderProjects(projects);
+      SaveData(projects);
     });
   } else {
     submitBtn.setAttribute("value", "Add");
@@ -94,6 +97,7 @@ function addProjectForm(projects, project = false) {
       projects.push(Project(projectName.value));
       closeModal();
       renderProjects(projects);
+      SaveData(projects);
     });
   }
   projectForm.appendChild(submitBtn);
