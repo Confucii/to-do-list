@@ -73,6 +73,7 @@ body {
   display: flex;
   align-items: center;
   border-radius: 10px;
+  transition: all 0.2s ease-in-out;
 }
 
 .project p {
@@ -91,7 +92,7 @@ body {
 }
 
 .project:hover {
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 12px;
+  transform: scale(1.03);
 }
 
 .project:hover img {
@@ -260,6 +261,7 @@ body {
 }
 
 .todo-div {
+  transition: all 0.2s ease-in-out;
   display: flex;
   background-color: var(--color-four);
   color: var(--color-three);
@@ -270,6 +272,10 @@ body {
   border: 1px solid black;
   font-size: 2rem;
   border-radius: 10px;
+}
+
+.todo-div:hover {
+  transform: scale(1.015);
 }
 
 .todo-date {
