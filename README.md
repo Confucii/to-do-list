@@ -1,4 +1,4 @@
-# To-do-page
+# To-do-list
 
 Odin project todo list. Project purpose is to further train division of code into modules, localStorage usage. There is a lot of ways to manipulate data in the project which feature creating, modifying and deleting objects. The project is styled like a board where info about criminals from across the metaverse can be stored. The data that can be stored is the name of the criminal, description, duedate to hunt down the criminal, danger level and status.
 
